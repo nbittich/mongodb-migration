@@ -3,8 +3,8 @@ const path = require("path");
 const mongodb = require("mongodb");
 const { MongoClient } = mongodb;
 
-const MONGO_HOST = envOrThrow("MONGO_HOST");
-const MONGO_PORT = envOrThrow("MONGO_PORT");
+const MONGO_HOST = process.env.MONGO_HOST || "localhost";
+const MONGO_PORT = process.env.MONGO_PORT || "27017";
 const MONGO_USERNAME = envOrThrow("MONGO_USERNAME");
 const MONGO_PASSWORD = envOrThrow("MONGO_PASSWORD");
 
@@ -75,7 +75,7 @@ async function ping() {
       console.log("ping database...");
       await ADMIN_CLIENT.ping();
       connected = true;
-    } catch (e) {}
+    } catch (e) { }
   }
   console.log("Connected!");
 }
