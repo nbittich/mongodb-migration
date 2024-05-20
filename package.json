@@ -1,6 +1,6 @@
 {
   "name": "mongodb-migrations",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "description": "MongoDB migrations",
   "main": "index.js",
   "scripts": {
