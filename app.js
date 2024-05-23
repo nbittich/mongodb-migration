@@ -35,7 +35,7 @@ async function main() {
     console.log(`Current file: ${file}`);
     const { execute, rollback, targetDatabases, description } = require(file);
     const databases =
-      (targetDatabases || allowedDatabases).filter((db) => allowedDatabases.includes(db)) ||
+      (targetDatabases || allowedDatabases).filter((db) => !INTERNAL_DATABASES.includes(db)) ||
       allowedDatabases;
     for (const database of databases) {
       const db = CLIENT.db(database);
