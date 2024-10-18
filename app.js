@@ -22,6 +22,7 @@ const ADMIN_CLIENT = CLIENT.db().admin();
 const CONTEXT = {
   uuid: require('uuid').v4,
   moment: require('moment'),
+  bcrypt: require('bcrypt'),
   now: () => new Date().toISOString().slice(0, 23)
 }
 
