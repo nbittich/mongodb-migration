@@ -6,6 +6,8 @@ const { MongoClient } = mongodb;
 const MONGO_HOST = process.env.MONGO_HOST || "localhost";
 const MONGO_PORT = process.env.MONGO_PORT || "27017";
 const MONGO_USERNAME = envOrThrow("MONGO_USERNAME");
+const MONGO_PING_MAX_RETRY = parseInt(process.env.MONGO_PING_MAX_RETRY || '5');
+const MONGO_PING_MAX_RETRY_SLEEP = parseInt(process.env.MONGO_PING_MAX_RETRY_SLEEP || '10000');
 const MONGO_PASSWORD = envOrThrow("MONGO_PASSWORD");
 
 const MIGRATIONS_DIR = process.env.MIGRATIONS_DIR || "/migrations";
@@ -71,12 +73,20 @@ async function main() {
 async function ping() {
   // ping db until available
   let connected = false;
+  let count = 0;
   while (!connected) {
     try {
       console.log("ping database...");
       await ADMIN_CLIENT.ping();
       connected = true;
-    } catch (e) { }
+    } catch (e) { 
+      await new Promise(resolve => setTimeout(resolve, MONGO_PING_MAX_RETRY_SLEEP))
+      count++
+      if(count == MONGO_PING_MAX_RETRY){
+        console.error('Max retry exceeded', e)
+        process.exit(-1)
+      }
+    }
   }
   console.log("Connected!");
 }
