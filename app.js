@@ -80,11 +80,11 @@ async function ping() {
       await ADMIN_CLIENT.ping();
       connected = true;
     } catch (e) { 
-      await new Promise(resolve => setTimeout(resolve, MONGO_PING_MAX_RETRY_SLEEP))
-      count++
+      await new Promise(resolve => setTimeout(resolve, MONGO_PING_MAX_RETRY_SLEEP));
+      count++;
       if(count == MONGO_PING_MAX_RETRY){
-        console.error('Max retry exceeded', e)
-        process.exit(-1)
+        console.error('Max retry exceeded', e);
+        process.exit(-1);
       }
     }
   }
