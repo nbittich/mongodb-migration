@@ -23,4 +23,4 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           push: true
-          tags: oxfamily/mongodb-migration:latest
+          tags: nbittich/mongodb-migration:latest
