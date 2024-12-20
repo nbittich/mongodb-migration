@@ -21,7 +21,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: oxfamily/mongodb-migration
+          images: nbittich/mongodb-migration
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
