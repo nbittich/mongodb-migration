@@ -21,11 +21,13 @@ const CLIENT = new MongoClient(
 
 const ADMIN_CLIENT = CLIENT.db().admin();
 
+const uuid = require('uuid').v7;
+
 const CONTEXT = {
-  uuid: require('uuid').v4,
+  uuid: () => uuid().replaceAll('-', ''),
   moment: require('moment'),
   bcrypt: require('bcrypt'),
-  now: () => new Date().toISOString().slice(0, 23)
+  now: () => new Date().toISOString()
 }
 
 async function main() {
@@ -79,10 +81,10 @@ async function ping() {
       console.log("ping database...");
       await ADMIN_CLIENT.ping();
       connected = true;
-    } catch (e) { 
+    } catch (e) {
       await new Promise(resolve => setTimeout(resolve, MONGO_PING_MAX_RETRY_SLEEP));
       count++;
-      if(count == MONGO_PING_MAX_RETRY){
+      if (count == MONGO_PING_MAX_RETRY) {
         console.error('Max retry exceeded', e);
         process.exit(-1);
       }
